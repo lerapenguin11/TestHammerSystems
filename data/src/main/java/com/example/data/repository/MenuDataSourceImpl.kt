@@ -9,8 +9,9 @@ class MenuDataSourceImpl : MenuDataSource {
 
         for (i in list){
             val icon = i.icon
+            val id = i.id
 
-            val listLetterModel = Banner(icon = icon)
+            val listLetterModel = Banner(icon = icon, id = id)
 
             bannerList.add(listLetterModel)
         }
