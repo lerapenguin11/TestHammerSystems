@@ -1,9 +1,9 @@
 package com.example.domain.common
 
-sealed class Result<out R> {
+sealed class ResultFood<out R> {
 
-    data class Success<out T>(val data: T) : Result<T>()
-    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Success<out T>(val data: T) : ResultFood<T>()
+    data class Error(val exception: Exception) : ResultFood<Nothing>()
 
     override fun toString(): String {
         return when (this) {
