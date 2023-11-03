@@ -17,7 +17,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         APP_ACTIVITY = this
+        replaceFragmentMain(MenuFragment())
+        setItemListenerBottomNav()
+    }
 
+    private fun setItemListenerBottomNav() {
         binding.bottomNavigationView.setOnItemSelectedListener {
 
             when(it.itemId){
