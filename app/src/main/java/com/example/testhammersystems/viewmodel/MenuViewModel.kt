@@ -26,6 +26,9 @@ class MenuViewModel(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
+    private val _list = MutableLiveData<List<Categories>>()
+    val list : LiveData<List<Categories>> = _list
+
     fun getBanner(): MutableList<Banner> {
         var mutableData = mutableListOf<Banner>()
         viewModelScope.launch{
@@ -42,6 +45,7 @@ class MenuViewModel(
                 is ResultFood.Success -> {
                     _remoteBooks.clear()
                     _remoteBooks.addAll(booksResult.data)
+                    _list.value = _remoteBooks
                 }
 
                 is ResultFood.Error -> {

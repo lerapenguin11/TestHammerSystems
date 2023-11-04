@@ -1,12 +1,17 @@
 package com.example.data.repository
 
+import com.example.data.api.CategoryItem
 import com.example.data.api.FoodApi
 import com.example.data.mappers.FoodApiResponseMapper
 import com.example.domain.common.ResultFood
 import com.example.domain.entities.Banner
 import com.example.domain.entities.Categories
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.reflect.Type
+
 
 class MenuDataSourceImpl(
     private val service: FoodApi,
@@ -28,11 +33,12 @@ class MenuDataSourceImpl(
         return bannerList
     }
 
-    override suspend fun getCategories(): com.example.domain.common.ResultFood<List<Categories>> =
+    override suspend fun getCategories(): ResultFood<List<Categories>> =
         withContext(Dispatchers.IO) {
             try {
                 val response = service.getCategories()
-                if (response.isSuccessful) {
+
+                if (response.isSuccessful()) {
                     return@withContext ResultFood.Success(mapper.toVolumeList(response.body()!!))
                 } else {
                     return@withContext ResultFood.Error(Exception(response.message()))
@@ -41,4 +47,5 @@ class MenuDataSourceImpl(
                 return@withContext ResultFood.Error(e)
             }
         }
+
 }
