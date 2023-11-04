@@ -8,6 +8,7 @@ import com.example.domain.entities.Products
 import com.example.testhammersystems.R
 import com.example.testhammersystems.presentation.adapter.diffCallback.ProductsItemDiffCallback
 import com.example.testhammersystems.presentation.adapter.viewholder.ProductsViewHolder
+import com.example.testhammersystems.utilits.URL_FILE
 
 class ProductsAdapter : ListAdapter<Products, ProductsViewHolder> (
     ProductsItemDiffCallback()
@@ -25,7 +26,7 @@ class ProductsAdapter : ListAdapter<Products, ProductsViewHolder> (
         //исправить
         holder.price.setText("от ${product.price} р")
 
-        val url = "http://192.168.43.78:3333/files/${product.image}"
+        val url = "${URL_FILE}${product.image}"
 
         Glide.with(holder.itemView)
             .load(url)

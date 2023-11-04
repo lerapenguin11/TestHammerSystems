@@ -16,11 +16,7 @@ class CategoriesAdapter : ListAdapter<Categories, CategoriesViewHolder>(
     CategoriesItemDiffCallback()) {
 
     var onCategoryClickListener : ((Categories) -> Unit)? = null
-    private var rowIndex = -1
-    private var previouslySelectedCategory: View? = null
-    private var check = false
-
-    private var selectedPosition = RecyclerView.NO_POSITION
+    private var selectedPosition = RECYCLER_VIEW_NO_POSITION
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val layout = when(viewType){
@@ -40,7 +36,6 @@ class CategoriesAdapter : ListAdapter<Categories, CategoriesViewHolder>(
         holder.name.text = categories.name
 
         holder.itemView.setOnClickListener {
-            rowIndex = position
             onCategoryClickListener?.invoke(categories)
             val previousSelectedPosition = selectedPosition
             selectedPosition = position
@@ -63,5 +58,6 @@ class CategoriesAdapter : ListAdapter<Categories, CategoriesViewHolder>(
         const val VIEW_TYPE_ENABLE = 100
         const val VIEW_TYPE_DISABLE = 101
         const val MAX_POOL_SIZE = 15
+        const val RECYCLER_VIEW_NO_POSITION = 0
     }
 }
