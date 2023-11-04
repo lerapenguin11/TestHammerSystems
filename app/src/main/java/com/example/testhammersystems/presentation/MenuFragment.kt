@@ -11,6 +11,7 @@ import com.example.domain.entities.Categories
 import com.example.testhammersystems.databinding.FragmentMenuBinding
 import com.example.testhammersystems.presentation.adapter.BannerAdapter
 import com.example.testhammersystems.presentation.adapter.CategoriesAdapter
+import com.example.testhammersystems.presentation.adapter.ProductsAdapter
 import com.example.testhammersystems.viewmodel.MenuViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,6 +21,7 @@ class MenuFragment : Fragment() {
     private val viewModel by viewModel<MenuViewModel>()
     private lateinit var bannerAdapter : BannerAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
+    private val productAdapter = ProductsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +38,17 @@ class MenuFragment : Fragment() {
         setBannerRecyclerView()
         bannerAdapter.submitList(viewModel.getBanner())
         setCategoriesRecyclerView()
-
-        println("CATEGOTIES: ${viewModel.remoteCategory}")
+        setProductRecyclerView()
+        categoryClickListener()
 
         return binding.root
+    }
+
+    private fun setProductRecyclerView() {
+        viewModel.productListLiveData.observe(viewLifecycleOwner, Observer {productsList ->
+            productAdapter.submitList(productsList)
+        })
+        binding.rvProduct.adapter = productAdapter
     }
 
     private fun setCategoriesRecyclerView() {
@@ -51,12 +60,15 @@ class MenuFragment : Fragment() {
         viewModel.categoryListLiveData.observe(viewLifecycleOwner, Observer {
             viewModel.getProducts(it[0].id.toString())
         })
-        categoryClickListener()
     }
 
     private fun categoryClickListener() {
         categoriesAdapter.onCategoryClickListener = {category ->
             viewModel.getProducts(category.id.toString())
+            viewModel.productListLiveData.observe(viewLifecycleOwner, Observer {
+                productAdapter.updateData(it)
+            })
+            binding.rvProduct.adapter = productAdapter
         }
     }
 

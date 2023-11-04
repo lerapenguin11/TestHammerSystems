@@ -6,7 +6,7 @@
     <color name="main_light_text">#AAAAAD</color>
     <color name="accent_text">#FD3A69</color>
     <color name="light_text">#C3C4C9</color>
-    <color name="transparent_accent">#f6cfd8</color>
+    <color name="transparent_accent">#f3ccd6</color>
     <color name="dark_accent_text">#7B7B7B</color>
     <color name="background">#fbfbfb</color>
 </resources>

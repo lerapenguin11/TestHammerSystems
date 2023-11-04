@@ -2,6 +2,7 @@ package com.example.testhammersystems
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import com.example.testhammersystems.databinding.ActivityMainBinding
 import com.example.testhammersystems.presentation.BasketFragment
 import com.example.testhammersystems.presentation.MenuFragment
@@ -19,6 +20,11 @@ class MainActivity : AppCompatActivity() {
         APP_ACTIVITY = this
         replaceFragmentMain(MenuFragment())
         setItemListenerBottomNav()
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
+        )
     }
 
     private fun setItemListenerBottomNav() {
