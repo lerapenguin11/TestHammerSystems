@@ -11,6 +11,8 @@ import com.example.testhammersystems.presentation.adapter.viewholder.CategoriesV
 class CategoriesAdapter : ListAdapter<Categories, CategoriesViewHolder>(
     CategoriesItemDiffCallback()) {
 
+    var onCategoryClickListener : ((Categories) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_categories_not_click, parent, false)
 
@@ -20,5 +22,9 @@ class CategoriesAdapter : ListAdapter<Categories, CategoriesViewHolder>(
     override fun onBindViewHolder(holder: CategoriesViewHolder, position: Int) {
         val categories = getItem(position)
         holder.name.text = categories.name
+
+        holder.itemView.setOnClickListener {
+            onCategoryClickListener?.invoke(categories)
+        }
     }
 }
