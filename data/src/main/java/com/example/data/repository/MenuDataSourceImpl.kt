@@ -1,16 +1,13 @@
 package com.example.data.repository
 
-import com.example.data.api.CategoryItem
 import com.example.data.api.FoodApi
 import com.example.data.mappers.FoodApiResponseMapper
 import com.example.domain.common.ResultFood
 import com.example.domain.entities.Banner
 import com.example.domain.entities.Categories
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.domain.entities.Products
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.reflect.Type
 
 
 class MenuDataSourceImpl(
@@ -39,7 +36,7 @@ class MenuDataSourceImpl(
                 val response = service.getCategories()
 
                 if (response.isSuccessful()) {
-                    return@withContext ResultFood.Success(mapper.toVolumeList(response.body()!!))
+                    return@withContext ResultFood.Success(mapper.toVolumeListCategorys(response.body()!!))
                 } else {
                     return@withContext ResultFood.Error(Exception(response.message()))
                 }
@@ -48,4 +45,18 @@ class MenuDataSourceImpl(
             }
         }
 
+    override suspend fun getProducts(categoryId: String): ResultFood<List<Products>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = service.getProduct(id = categoryId)
+
+                if (response.isSuccessful()) {
+                    return@withContext ResultFood.Success(mapper.toVolumeListProducts(response.body()!!))
+                } else {
+                    return@withContext ResultFood.Error(Exception(response.message()))
+                }
+            } catch (e: Exception) {
+                return@withContext ResultFood.Error(e)
+            }
+        }
 }

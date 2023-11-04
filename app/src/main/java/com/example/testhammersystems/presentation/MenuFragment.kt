@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.example.testhammersystems.R
 import com.example.testhammersystems.databinding.FragmentMenuBinding
 import com.example.testhammersystems.presentation.adapter.BannerAdapter
 import com.example.testhammersystems.presentation.adapter.CategoriesAdapter
@@ -23,6 +22,8 @@ class MenuFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getCategories()
+
+        viewModel.getProducts("1")
     }
 
     override fun onCreateView(
@@ -36,14 +37,14 @@ class MenuFragment : Fragment() {
         bannerAdapter.submitList(viewModel.getBanner())
         setCategoriesRecyclerView()
 
-        println("CATEGOTIES: ${viewModel.remoteBooks}")
+        println("CATEGOTIES: ${viewModel.remoteCategory}")
 
         return binding.root
     }
 
     private fun setCategoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
-        viewModel.list.observe(viewLifecycleOwner, Observer {
+        viewModel.categoryListLiveData.observe(viewLifecycleOwner, Observer {
             categoriesAdapter.submitList(it)
         })
         binding.categoriesLayout.rvCategories.adapter = categoriesAdapter
