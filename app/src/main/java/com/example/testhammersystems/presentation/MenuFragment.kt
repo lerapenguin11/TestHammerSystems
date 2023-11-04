@@ -22,7 +22,7 @@ class MenuFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.getCategories()
     }
 
     override fun onCreateView(
@@ -31,14 +31,10 @@ class MenuFragment : Fragment() {
     ): View? {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
-        viewModel.getCategories()
+
         setBannerRecyclerView()
         bannerAdapter.submitList(viewModel.getBanner())
-
         setCategoriesRecyclerView()
-
-
-
 
         println("CATEGOTIES: ${viewModel.remoteBooks}")
 

@@ -1,7 +1,6 @@
 package com.example.data.mappers
 
 import com.example.data.api.CategoriesApiResponse
-import com.example.data.api.CategoryItem
 import com.example.domain.entities.Categories
 
 class FoodApiResponseMapper {
@@ -16,10 +15,5 @@ class FoodApiResponseMapper {
             list.add(cat)
         }
         return list
-
-        /*return response.items.map {
-            Categories(
-                it.id, it.name)
-        }*/
     }
 }

@@ -12,6 +12,6 @@
         android:id="@+id/ic_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:srcCompat="@drawable/banner1" />
 </androidx.cardview.widget.CardView>
