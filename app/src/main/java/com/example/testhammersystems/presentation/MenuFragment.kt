@@ -57,6 +57,10 @@ class MenuFragment : Fragment() {
             categoriesAdapter.submitList(it)
         })
         binding.categoriesLayout.rvCategories.adapter = categoriesAdapter
+        with(binding.categoriesLayout.rvCategories){
+            recycledViewPool.setMaxRecycledViews(CategoriesAdapter.VIEW_TYPE_DISABLE, CategoriesAdapter.MAX_POOL_SIZE)
+            recycledViewPool.setMaxRecycledViews(CategoriesAdapter.VIEW_TYPE_ENABLE, CategoriesAdapter.MAX_POOL_SIZE)
+        }
         viewModel.categoryListLiveData.observe(viewLifecycleOwner, Observer {
             viewModel.getProducts(it[0].id.toString())
         })

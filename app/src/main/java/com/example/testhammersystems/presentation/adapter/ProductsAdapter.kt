@@ -23,7 +23,7 @@ class ProductsAdapter : ListAdapter<Products, ProductsViewHolder> (
         holder.nameProduct.text = product.name
         holder.structure.text = product.ingredients
         //исправить
-        holder.price.text = product.price.toString()
+        holder.price.setText("от ${product.price} р")
 
         val url = "http://192.168.43.78:3333/files/${product.image}"
 

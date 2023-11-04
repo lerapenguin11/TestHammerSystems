@@ -15,5 +15,5 @@ val dataModule = module {
     single<MenuDataSource> { MenuDataSourceImpl(get(), get()) }
     single<MenuRepository> { MenuRepositoryImpl(get()) }
     single { FoodApiResponseMapper() }
-    single { networkModule.createBooksApi("http://192.168.43.78:3333") }
+    single { networkModule.createBooksApi("https://svergut.tw1.su/food-delivery/api/") }
 }
