@@ -6,6 +6,7 @@ import com.example.data.repository.MenuDataSource
 import com.example.data.repository.MenuDataSourceImpl
 import com.example.data.repository.MenuRepositoryImpl
 import com.example.domain.repository.MenuRepository
+import com.example.testhammersystems.utilits.APP_ACTIVITY
 import com.example.testhammersystems.utilits.URL
 import org.koin.dsl.module
 
@@ -16,5 +17,5 @@ val dataModule = module {
     single<MenuDataSource> { MenuDataSourceImpl(get(), get()) }
     single<MenuRepository> { MenuRepositoryImpl(get()) }
     single { FoodApiResponseMapper() }
-    single { networkModule.createBooksApi(URL) }
+    single { networkModule.createFoodApi(URL) }
 }
