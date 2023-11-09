@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
     val networkModule by lazy {
-        NetworkModule()
+        NetworkModule(APP_ACTIVITY.applicationContext)
     }
     single<MenuDataSource> { MenuDataSourceImpl(get(), get()) }
     single<MenuRepository> { MenuRepositoryImpl(get()) }

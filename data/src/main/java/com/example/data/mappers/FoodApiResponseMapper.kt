@@ -6,7 +6,8 @@ import com.example.domain.entities.Categories
 import com.example.domain.entities.Products
 
 class FoodApiResponseMapper {
-    fun toVolumeListCategorys(response: CategoriesApiResponse): List<Categories> {
+
+    fun toVolumeListCategories(response: CategoriesApiResponse): List<Categories> {
         var list = arrayListOf<Categories>()
         for (i in response){
             val id = i.id

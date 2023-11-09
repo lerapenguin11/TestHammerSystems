@@ -1,18 +1,27 @@
 package com.example.data.api
 
 import android.content.Context
+import android.net.ConnectivityManager
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
+import okhttp3.CacheControl
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
 
-class NetworkModule() {
+class NetworkModule(context: Context) {
+
+    private val cacheSize = 10 * 1024 * 1024
+    private val httpCacheDirectory = File(context.cacheDir, "http-cache")
+    val cache = Cache(httpCacheDirectory, cacheSize.toLong())
 
     private val moshi by lazy {
         val moshiBuilder = Moshi.Builder()
@@ -26,8 +35,22 @@ class NetworkModule() {
         loggingInterceptor
     }
 
+    private val networkCacheInterceptor = Interceptor { chain ->
+        val response = chain.proceed(chain.request())
+
+        var cacheControl = CacheControl.Builder()
+            .maxAge(1, TimeUnit.MINUTES)
+            .build()
+
+        response.newBuilder()
+            .header("Cache-Control", cacheControl.toString())
+            .build()
+    }
+
     private val httpClient by lazy {
         OkHttpClient.Builder()
+            .cache(cache = cache)
+            .addNetworkInterceptor(networkCacheInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
     }
@@ -48,3 +71,4 @@ class NetworkModule() {
         return retrofit.create(FoodApi::class.java)
     }
 }
+

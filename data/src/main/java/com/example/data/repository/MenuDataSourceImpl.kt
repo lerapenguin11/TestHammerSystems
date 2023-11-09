@@ -35,8 +35,11 @@ class MenuDataSourceImpl(
             try {
                 val response = service.getCategories()
 
-                if (response.isSuccessful()) {
-                    return@withContext ResultFood.Success(mapper.toVolumeListCategorys(response.body()!!))
+                if (response.raw().cacheResponse != null){
+                    return@withContext ResultFood.Success(mapper.toVolumeListCategories(response.body()!!))
+                }
+                else if (response.isSuccessful()) {
+                    return@withContext ResultFood.Success(mapper.toVolumeListCategories(response.body()!!))
                 } else {
                     return@withContext ResultFood.Error(Exception(response.message()))
                 }
@@ -50,7 +53,10 @@ class MenuDataSourceImpl(
             try {
                 val response = service.getProduct(id = categoryId)
 
-                if (response.isSuccessful()) {
+                if (response.raw().cacheResponse != null){
+                    return@withContext ResultFood.Success(mapper.toVolumeListProducts(response.body()!!))
+                }
+                else if (response.isSuccessful()) {
                     return@withContext ResultFood.Success(mapper.toVolumeListProducts(response.body()!!))
                 } else {
                     return@withContext ResultFood.Error(Exception(response.message()))
